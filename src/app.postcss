@@ -1,0 +1,45 @@
+/* Write your global styles here, in PostCSS syntax */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: 'American Typewriter';
+    src: local('American Typewriter'), local('American-Typewriter'), local('american typewriter'), local('american-typewriter'), url('/fonts/american-typewriter/american-typewriter.ttf');
+    font-weight: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Avenir Next Condensed';
+    src: local('Avenir Next Condensed'), local('Avenir-Next-Condensed'), local('avenir next condensed'), local('avenir-next-condensed'), url('/fonts/avenir-next-condensed/Avenir-Next-Condensed.ttf');
+    font-weight: normal;
+    font-display: swap;
+  }
+@font-face {
+    font-family: 'Avenir Next Condensed';
+    src: local('Avenir Next Condensed'), local('Avenir-Next-Condensed'), local('avenir next condensed'), local('avenir-next-condensed'), url('/fonts/avenir-next-condensed/Avenir-Next-Condensed-Bold.ttf');
+    font-weight: bold;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Impact';
+    src: local('Impact'), local('impact'), url('/fonts/impact/Impact.ttf');
+    font-weight: normal;
+    font-display: swap;
+  }
+}
+
+:root {
+  /* primary | #D22229 */
+	--color-primary-50: 248 222 223; /* ⬅ #f8dedf */
+	--color-primary-100: 246 211 212; /* ⬅ #f6d3d4 */
+	--color-primary-200: 244 200 202; /* ⬅ #f4c8ca */
+	--color-primary-300: 237 167 169; /* ⬅ #eda7a9 */
+	--color-primary-400: 224 100 105; /* ⬅ #e06469 */
+	--color-primary-500: 210 34 41; /* ⬅ #D22229 */
+	--color-primary-600: 189 31 37; /* ⬅ #bd1f25 */
+	--color-primary-700: 158 26 31; /* ⬅ #9e1a1f */
+	--color-primary-800: 126 20 25; /* ⬅ #7e1419 */
+	--color-primary-900: 103 17 20; /* ⬅ #671114 */
+}
