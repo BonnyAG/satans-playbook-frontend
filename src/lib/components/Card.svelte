@@ -20,7 +20,7 @@
 <!-- CARD START -->
 <div class="{hoverScale ? 'hover:scale-110' : ''} {hideOnMobile ? 'hidden lg:block' : ''} {singleCardResponsive ? 'mt-4 self-center md:self-start' : ''} bg-white border-4 border-surface-500 shadow-md shadow-surface-500 text-slate-900 p-4 w-80 rounded-lg col-auto hover:shadow-maroon hover:shadow-2xl transition flex flex-col text-center h-[27rem] hover:cursor-pointer" on:click={clickable ? () => goto('/cards/' + id) : null} on:keypress={clickable ? () => goto('/cards/' + id) : null}>
   <!-- Card Title -->
-  <h2 class="font-heading h2 font-bold self-center uppercase">{title}</h2>
+  <h2 class="font-heading text-3xl font-bold self-center uppercase">{title}</h2>
 
   <!-- CONTENT START -->
   <!-- Idea -->
