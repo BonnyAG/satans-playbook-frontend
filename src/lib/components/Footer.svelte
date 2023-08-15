@@ -14,7 +14,7 @@
     <p>Loading footer...</p>
   {:then footer}
     <p>{footer.copyright}</p>
-    <p>{footer.license_prefix} <a rel="license" class="text-maroon hover:underline" target="_blank" href={footer.license_url}>{footer.license_name}</a>.</p>
+    <p>{footer.license_prefix} <a rel="license" class="text-white hover:text-maroon underline" target="_blank" href={footer.license_url}>{footer.license_name}</a>.</p>
   {:catch error}
     <p class="text-red">{error.message}</p>
   {/await}

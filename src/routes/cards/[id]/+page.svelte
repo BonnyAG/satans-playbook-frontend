@@ -37,14 +37,15 @@
       idea={card.idea_short}
       example={card.example_short}
       solution={card.solution_short}
+      hideOnMobile={true}
     />
 
     <!-- Hero Content -->
-    <div class="font-body tracking-wider text-lg flex content-end flex-col basis-2/3 px-6">
+    <div class="font-body tracking-wider text-lg flex content-end flex-col lg:w-[80%] px-6">
       <!-- Card Title -->
-      <div class="flex justify-between content-end mt-[-1rem]">
+      <div class="flex flex-wrap gap-y-3 justify-between content-end mt-[-1rem]">
         <h1 class="h1 font-heading uppercase tracking-wider font-bold self-end">{card.title}</h1>
-        <a href="/" type="button" class="btn variant-filled w-48 self-center mb-1">
+        <a href="/" type="button" class="btn variant-filled w-36 md:w-48 self-center mb-1">
           <span>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
               <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
@@ -70,7 +71,7 @@
 
       <!-- Resources -->
       <h2 class="h2 mt-8 mb-2 font-heading tracking-wider uppercase font-bold">More Resources</h2>
-      <nav class="list-nav">
+      <nav class="lg:list-nav">
         <ul>
           {#if card.link_reference.length > 0}
             {#each card.link_reference as reference}

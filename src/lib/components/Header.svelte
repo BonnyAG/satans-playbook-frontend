@@ -39,8 +39,9 @@
       <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
 
         <!-- SITE LOGO START -->
-        <a href="/" class="flex flex-shrink-0 items-center hover:bg-gray-700 transition p-3 rounded-full">
+        <a href="/" class="flex gap-x-3 flex-shrink-0 items-center hover:bg-gray-700 transition p-3 rounded-full">
           <img class="h-8 w-auto" src={logo} alt="Satan's Playbook Logo">
+          <span class="text-3xl uppercase font-heading">Satan's Playbook</span>
         </a>
         <!-- SITE LOGO END -->
 
