@@ -7,7 +7,9 @@
     {type: "prophets_and_apostles", name:"Prophets & Apostles", style: "bg-secondary-300 text-secondary-900"},
     {type: "social_science", name:"Social Science", style: "bg-tertiary-300 text-tertiary-900"},
     {type: "article", name:"Article", style: "bg-success-300 text-success-900"},
-    {type: "research_paper", name:"Research Paper", style: "bg-surface-300 text-surface-900"}
+    {type: "research_paper", name:"Research Paper", style: "bg-surface-300 text-surface-900"},
+    {type: "book", name:"Book", style: "bg-yellow-800 text-white"},
+    {type: "film", name:"Film & TV", style: "bg-purple-300 text-purple-900"}
   ]
 
   let volumeConversion = [
@@ -156,7 +158,7 @@
       
     }
     
-    reference.badge =badgeColors[0]; 
+    reference.badge =badgeColors[0];
   } else {
     let findBadge = badgeColors.find(o => o.type === link.type);
     
