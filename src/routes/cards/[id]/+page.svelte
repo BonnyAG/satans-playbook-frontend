@@ -10,6 +10,7 @@
   import Footer from '$lib/components/Footer.svelte';
   import Card from '$lib/components/Card.svelte';
   import Reference from '$lib/components/Reference.svelte';
+  import Markdown from 'svelte-markdown';
 
   let badgeColors = [
     {type: "scriptures", name:"Scriptures", style: "bg-primary-300 text-primary-900"},
@@ -57,17 +58,17 @@
       <hr class="mt-2 mb-5"/>
 
       <!-- Definition of the Spiritual Fallacy -->
-      <p ><b>Definition: </b>{card.idea_full == null ? card.idea_short : card.idea_full}</p>
+      <Markdown class="whitespace-pre-line" source={card.idea_full == null ? card.idea_short : card.idea_full} />
 
       <!-- Example -->
       <div class="text-white bg-maroon rounded-xl p-3 mt-8 ">
         <h2 class="text-2xl mb-2 font-heading tracking-wider uppercase font-bold">What does this look like?</h2>
-        <p>{card.example_long == null ? card.example_short : card.example_long}</p>
+        <Markdown class="whitespace-pre-line" source={card.example_long == null ? card.example_short : card.example_long} />
       </div>
 
       <!-- Solution -->
       <h2 class="text-2xl mt-8 mb-2 font-heading tracking-wider uppercase font-bold">What do I do about it?</h2>
-      <p>{card.solution_long == null ? card.solution_short : card.solution_long}</p>
+      <Markdown class="whitespace-pre-line" source={card.solution_long == null ? card.solution_short : card.solution_long} />
 
       <!-- Resources -->
       <h2 class="text-2xl mt-8 mb-2 font-heading tracking-wider uppercase font-bold">More Resources</h2>
