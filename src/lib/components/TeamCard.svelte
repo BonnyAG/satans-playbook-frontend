@@ -14,7 +14,7 @@
 
   <!-- Main Info -->
   <div class="my-4">
-    <h2 class="h2 font-heading uppercase text-3xl tracking-wider font-bold mb-1">{name}</h2>
+    <h2 class="h2 font-heading uppercase text-3xl tracking-wider mb-1">{name}</h2>
     <span class="badge font-body text-md tracking-wider variant-filled-secondary">{role}</span>
   </div>
 

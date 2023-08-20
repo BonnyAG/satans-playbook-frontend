@@ -45,7 +45,7 @@
     <div class="font-body tracking-wider text-lg flex content-end flex-col lg:w-[80%] px-6">
       <!-- Card Title -->
       <div class="flex flex-wrap gap-y-3 justify-between content-end mt-[-1rem]">
-        <h1 class="text-4xl font-heading uppercase tracking-wider font-bold self-end">{card.title}</h1>
+        <h1 class="text-4xl font-heading uppercase tracking-wider self-end">{card.title}</h1>
         <a href="/" type="button" class="btn variant-filled w-36 md:w-48 self-center mb-1">
           <span>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -62,26 +62,26 @@
 
       <!-- Example -->
       <div class="text-white bg-maroon rounded-xl p-3 mt-8 ">
-        <h2 class="text-2xl mb-2 font-heading tracking-wider uppercase font-bold">What does this look like?</h2>
+        <h2 class="text-2xl mb-2 font-heading tracking-wider uppercase">What does this look like?</h2>
         <Markdown class="whitespace-pre-line" source={card.example_long == null ? card.example_short : card.example_long} />
       </div>
 
       <!-- Solution -->
-      <h2 class="text-2xl mt-8 mb-2 font-heading tracking-wider uppercase font-bold">What do I do about it?</h2>
+      <h2 class="text-2xl mt-8 mb-2 font-heading tracking-wider uppercase">What do I do about it?</h2>
       <Markdown class="whitespace-pre-line" source={card.solution_long == null ? card.solution_short : card.solution_long} />
 
       <!-- Resources -->
-      <h2 class="text-2xl mt-8 mb-2 font-heading tracking-wider uppercase font-bold">More Resources</h2>
+      <h2 class="text-2xl mt-8 mb-2 font-heading tracking-wider uppercase">More Resources</h2>
       <nav class="lg:list-nav">
         <ul>
-          {#if card.link_reference.length > 0}
-            {#each card.link_reference as reference}
-              <Reference linkType="externalLink" link={reference} />
-            {/each}
-          {/if}
           {#if card.scripture_references.length > 0}
             {#each card.scripture_references as reference}
               <Reference linkType="scripture" link={reference} />
+            {/each}
+          {/if}
+          {#if card.link_reference.length > 0}
+            {#each card.link_reference as reference}
+              <Reference linkType="externalLink" link={reference} />
             {/each}
           {/if}
         </ul>
