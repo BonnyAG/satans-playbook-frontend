@@ -1,0 +1,32 @@
+name: deploy
+run-name: Deploying the newest build version to the production server
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: npm install and build
+        run: |
+          npm install
+          npm build
+      - name: Archive build folder
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-folder
+          path: |
+            build
+      - name: Archive package.json
+        uses: actions/upload-artifact@v3
+        with:
+          name: pkg-json
+          path: package.json
+      - name: Archive package-lock.json
+        uses: actions/upload-artifact@v3
+        with:
+          name: pkg-lock-json
+          path: package-lock.json
