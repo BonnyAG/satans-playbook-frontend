@@ -53,18 +53,18 @@
   
   // SCORE
   let score = 0;
-  let result = "";
-  let disableButtons = false;  
+  let disableButtons = false;
+  let buttonFeedback = null;
 
   function checkAnswer(position) {
     let correctIndex = solutions.findIndex(o => o === currCard.title);
     disableButtons = true;
     
     if (position === correctIndex) {
-      result = "(CONGRATS)";
+      buttonFeedback = {position: position, style: "variant-filled-success", icon: "check"};
       score += difficultyLevel === "easy" ? 1 : (difficultyLevel === "medium" ? 2 : 3);
     } else {
-      result = "(INCORRECT)";
+      buttonFeedback = {position: position, style: "variant-filled-error", icon: "xmark"};
     }
     
     hideOnCard=[];
@@ -85,7 +85,7 @@
 
   function nextRound() {
     counter++;
-    result = "";
+    buttonFeedback = null;
     disableButtons = !disableButtons;
     currCard = cards[cardOrder[counter]].attributes;
     getNewAnswers();
@@ -103,7 +103,6 @@
 <section>
   <div class="flex flex-col gap-y-3 md:gap-y-0 md:flex-row justify-center gap-x-6 mb-2">
     <h2 class="font-heading tracking-wider uppercase text-4xl font-bold text-white text-center">Score: {score}</h2>
-    <h2 class="font-heading tracking-wider uppercase text-4xl font-bold text-white text-center">{result}</h2>
   </div>
   <div class="flex flex-col md:flex-row  items-center justify-center gap-x-4">
     <h2 class="font-heading tracking-wider uppercase text-4xl font-bold mt-4 text-white text-center mb-4">Difficulty Level</h2>
@@ -126,12 +125,65 @@
       hideOnMobile={false}
       itemsToHide={hideOnCard}
       singleCardResponsive={true}
+      strictHeight={false}
     />
   </div>
   <div class="flex flex-col md:flex-row gap-y-4 md:gap-y-0 justify-center mt-8 flex gap-x-4">
-      <button type="button" disabled={disableButtons} on:click={() => checkAnswer(0)} class="btn variant-filled-primary">{solutions[0]}</button>
-      <button type="button" disabled={disableButtons} on:click={() => checkAnswer(1)} class="btn variant-filled-primary">{solutions[1]}</button>
-      <button type="button" disabled={disableButtons} on:click={() => checkAnswer(2)} class="btn variant-filled-primary">{solutions[2]}</button>
+      <button type="button" disabled={disableButtons} on:click={() => checkAnswer(0)} class={`btn ${buttonFeedback?.position === 0 ? buttonFeedback?.style : "variant-filled"}`}>
+        <span>{solutions[0]}</span>
+        <span>
+        {#if buttonFeedback?.position === 0}
+          {#if buttonFeedback?.icon === "check"}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="main-grid-item-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+              <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+          {:else if buttonFeedback?.icon === "xmark"}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="main-grid-item-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="15" x2="9" y1="9" y2="15" />
+              <line x1="9" x2="15" y1="9" y2="15" />
+            </svg>
+          {/if}
+        {/if}
+        </span>
+      </button>
+      <button type="button" disabled={disableButtons} on:click={() => checkAnswer(1)} class={`btn ${buttonFeedback?.position === 1 ? buttonFeedback?.style : "variant-filled"}`}>
+        <span>{solutions[1]}</span>
+        <span>
+        {#if buttonFeedback?.position === 1}
+          {#if buttonFeedback?.icon === "check"}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="main-grid-item-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+              <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+          {:else if buttonFeedback?.icon === "xmark"}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="main-grid-item-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="15" x2="9" y1="9" y2="15" />
+              <line x1="9" x2="15" y1="9" y2="15" />
+            </svg>
+          {/if}
+        {/if}
+      </button>
+      <button type="button" disabled={disableButtons} on:click={() => checkAnswer(2)} class={`btn ${buttonFeedback?.position === 2 ? buttonFeedback?.style : "variant-filled"}`}>
+        <span>{solutions[2]}</span>
+        <span>
+        {#if buttonFeedback?.position === 2}
+          {#if buttonFeedback?.icon === "check"}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="main-grid-item-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+              <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+          {:else if buttonFeedback?.icon === "xmark"}
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" class="main-grid-item-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="15" x2="9" y1="9" y2="15" />
+              <line x1="9" x2="15" y1="9" y2="15" />
+            </svg>
+          {/if}
+        {/if}
+      </button>
   </div>
   <div class="flex justify-center mt-8 flex gap-x-4">
       <button type="button" disabled={!disableButtons} on:click={nextRound} class="btn w-full md:w-auto variant-filled">Next Round</button>
