@@ -153,7 +153,7 @@
     </section>
     <!-- Game -->
     <div class="flex gap-x-4 lg:w-[60%]">
-        <div class="{role === "player" || drawnSituationCard === null ? 'hidden' : ''}">
+        <div class="{role === "player" || drawnSituationCard === null ? 'hidden' : ''} px-4 py-10">
             <SituationCard title={drawnSituationCard?.attributes.title} description={drawnSituationCard?.attributes.description} />
         </div>
         <div class="{role === "judge" ? 'hidden' : ''} snap-x scroll-px-4 snap-mandatory scroll-smooth flex gap-4 overflow-x-auto px-4 py-10">
