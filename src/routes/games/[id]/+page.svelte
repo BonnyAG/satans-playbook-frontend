@@ -3,11 +3,13 @@
   import GuessSingle from '$lib/games/GuessSingle.svelte';
   import Header from '$lib/components/Header.svelte';
   import Footer from '$lib/components/Footer.svelte';
+  import ShoulderAngel from '$lib/games/ShoulderAngel.svelte';
 
   // Get Cards data
   export let data;
   const {cards} = data;
   const {game} = data;
+  const {situationCards} = data;
 </script>
 
 <svelte:head>
@@ -15,14 +17,9 @@
 </svelte:head>
 
 <Header selectedPage="" />
-<main class="font-body tracking-wide text-lg container px-8 lg:px-4 mx-auto mt-10">
-  <!-- TITLE -->
-  <section class="my-4 text-center">
-    <h1 class="h1 font-heading tracking-wider uppercase text-4xl lg:text-5xl mb-5 text-white text-center">{game.attributes.title}</h1>
-    <p>{game.attributes.description}</p>
-  </section>
-  <!-- SIDEBAR -->
-  <section></section>
-  <GuessSingle cards={cards} />
-</main>
+  {#if game.id === 1}
+    <ShoulderAngel cards={cards} game={game} situationCards={situationCards}/>
+  {:else if game.id === 3}
+    <GuessSingle cards={cards} game={game}/>
+  {/if}
 <Footer />

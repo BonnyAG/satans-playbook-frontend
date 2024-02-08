@@ -15,8 +15,8 @@
   const {games} = data;
   const {page} = data;
 
-  function nav(id) {
-    if(id === 3) {
+  function nav(id: number) {
+    if(id !== 2) {
       goto(`/games/${id}`)
     } else {
       alert("Coming Soon");

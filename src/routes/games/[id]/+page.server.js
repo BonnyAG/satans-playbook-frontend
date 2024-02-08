@@ -10,8 +10,19 @@ export const load = async ({ fetch, params }) => {
   const gameResult = await fetch(`https://satansplaybook.byu.edu/cms/api/games/${params.id}?populate=*`);
   const gameData = await gameResult.json();
 
-  return {
-    cards: cardData.data,
-    game: gameData.data
+  if(params.id === '1') {
+    const situationCardResult = await fetch('https://satansplaybook.byu.edu/cms/api/situation-cards?pagination[limit]=100&populate=*&sort[0]=title');
+    const situationCardData = await situationCardResult.json();
+
+    return {
+      cards: cardData.data,
+      game: gameData.data,
+      situationCards: situationCardData.data
+    }
+  } else {
+    return {
+      cards: cardData.data,
+      game: gameData.data
+    }
   }
 }
