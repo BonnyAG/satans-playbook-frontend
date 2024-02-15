@@ -159,7 +159,7 @@
         <div class="{role === "judge" ? 'hidden' : ''} snap-x scroll-px-4 snap-mandatory scroll-smooth flex gap-4 overflow-x-auto px-4 py-10">
             {#if drawnPlayerCards !== null}
                 {#each drawnPlayerCards as card}
-                    <div class="flex flex-none flex-col align-center">
+                    <div class="snap-center flex flex-none flex-col align-center">
                         <AngelCard devilTitle={card.attributes.title} devilDescription={card.attributes.idea_short} angelTitle={card.attributes.angel_title} angelDescription={card.attributes.solution_short} />
                         <button type="button" class="mt-3 btn variant-filled"
                         on:click={() => {
