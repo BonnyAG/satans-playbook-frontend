@@ -31,7 +31,7 @@
     {#each games as game}
       <div class="bg-primary-200 w-auto h-auto p-12 shadow-2xl shadow-primary-900 hover:shadow-primary-700 transition rounded-3xl basis-1/3">
         <h2 class="text-3xl font-heading tracking-wider uppercase text-maroon mb-2">{game.attributes.title}</h2>
-        <p class="text-primary-900">{game.attributes.description}</p>
+        <p class="text-primary-900">{game.attributes.short_description}</p>
         <button type="button" on:click={() => nav(game.id)} class="btn variant-filled-primary mt-4">Play Game</button>
       </div>
     {/each}
