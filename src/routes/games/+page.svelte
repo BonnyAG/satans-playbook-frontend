@@ -1,5 +1,5 @@
 <svelte:head>
-  <title>Satan's Playbook - {page.meta_title}</title>
+  <title>Satan's Playbook - Games</title>
   <meta name="description" content={page.meta_description} />
 </svelte:head>
 
@@ -16,11 +16,7 @@
   const {page} = data;
 
   function nav(id: number) {
-    if(id !== 2) {
-      goto(`/games/${id}`)
-    } else {
-      alert("Coming Soon");
-    }
+    goto(`/games/${id}`)
   }
 </script>
 

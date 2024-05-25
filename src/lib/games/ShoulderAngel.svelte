@@ -1,8 +1,8 @@
 <script lang="ts">
     // Imports
-    import { Accordion, AccordionItem, RadioGroup, RadioItem, filter } from '@skeletonlabs/skeleton';
+    import { Accordion, AccordionItem, RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
     import SituationCard from '$lib/components/SituationCard.svelte';
-    import AngelCard from '$lib/components/AngelCard.svelte';
+    import Card from '$lib/components/Card.svelte';
 
     // Helper
     const shuffle = (array: any[]) => { 
@@ -47,7 +47,7 @@
     export let game: any;
 
     let availableSituationCards = situationCards;
-
+    let hideOnCard = ["example", "solution"];
     let availableCards = cards;
 
     // Game options
@@ -55,6 +55,12 @@
     let numCards = 3;
     let drawnSituationCard: any = null;
     let drawnPlayerCards: any = null;
+    let displayCards: any = null 
+    let currentRound: string = "devil";
+    let cardPlayed: boolean = false;
+    let playerWonRound: boolean = false;
+    let displayInput: boolean = false;
+    let cardId: number|null = null; 
 
     // JUDGING
     const pickSituationCard = () => {
@@ -80,13 +86,23 @@
         } else {
             availableCards = availableCards.filter(filterMultiple);
         }
-        console.log(numCards, availableCards);
+        displayCards = drawnPlayerCards;
+    }
+    
+    function playDevilCard(selectedCard: any) {
+        function filterCard(item: any) {
+            return item !== selectedCard;
+        }
+        drawnPlayerCards = drawnPlayerCards.filter(filterCard);
+        
+        displayCards = [selectedCard];
+        cardPlayed = true;
     }
 </script>
 
 <main class="font-body flex flex-col lg:gap-x-4 lg:flex-row tracking-wide text-lg container px-8 lg:px-4 mx-auto md:mt-10">
     <!-- TITLE -->
-    <section class="rounded-2xl bg-slate-800 p-4 my-4 lg:my-0 lg:w-[40%] text-center">
+    <section class="rounded-2xl bg-slate-800 p-4 my-4 lg:my-0 lg:w-[40%]">
       <h1 class="h1 font-heading tracking-wider uppercase text-3xl lg:text-4xl mb-5 text-white text-center">{game.attributes.title}</h1>
       <Accordion>
         <AccordionItem>
@@ -99,8 +115,8 @@
             <svelte:fragment slot="content">{game.attributes.description}</svelte:fragment>
         </AccordionItem>
       </Accordion>
-      <div class="flex flex-col items-start border border-white border-dashed p-3 mt-4 rounded-xl">
-        <div class="flex gap-x-4">
+      <div class="flex flex-col items-start border border-white border-dashed p-3 mt-4 rounded-xl gap-y-3">
+        <div class="flex flex-col gap-y-4 md:flex-row md:gap-y-0 md:gap-x-4"> 
             <div class="flex flex-col items-start">
                 <span class="font-bold ml-2 mb-1">My Role</span>
                 <RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary">
@@ -108,7 +124,7 @@
                     <RadioItem bind:group={role} name="role" value={"player"}>Player</RadioItem>
                 </RadioGroup>
             </div>
-            <div class="{role === "judge" ? 'hidden' : ''} flex flex-col items-start">
+            <div class={`${role === "judge" ? 'hidden' : ''} flex flex-col items-start`}>
                 <span class="font-bold ml-2 mb-1">Cards in Hand</span>
                 <RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary">
                     <RadioItem bind:group={numCards} name="numCards" value={1}>1</RadioItem>
@@ -118,7 +134,7 @@
             </div>
         </div>
         
-        <button type="button" class="mt-4 w-full h-12 btn-icon variant-filled-primary"
+        <button type="button" class="w-full h-12 btn-icon variant-filled-primary"
             on:click={() => {
                 if(role === "judge") {
                     pickSituationCard();
@@ -129,12 +145,13 @@
         >
             Draw New Card(s)
         </button>
-        <button type="button" class="{role !== 'player' || drawnPlayerCards === null || drawnPlayerCards.length >= numCards ? 'hidden' : ''} mt-4 w-full h-12 btn-icon variant-filled"
+        <button type="button" class={`${role !== 'player' || drawnPlayerCards === null || drawnPlayerCards.length >= numCards || currentRound === "angel" || cardPlayed ? 'hidden' : ''} w-full h-12 btn-icon variant-filled`}
             on:click={() => {
                 let difference = numCards - drawnPlayerCards.length;
 
                 let tempArr = getMultipleOptions(availableCards, difference);
                 drawnPlayerCards = [...drawnPlayerCards, ...tempArr];
+                displayCards = drawnPlayerCards;
 
                 function filterRefill(item) {
                     return !tempArr?.includes(item);
@@ -152,27 +169,62 @@
       </div>
     </section>
     <!-- Game -->
-    <div class="flex gap-x-4 lg:w-[60%]">
-        <div class="{role === "player" || drawnSituationCard === null ? 'hidden' : ''} px-4 py-10">
-            <SituationCard title={drawnSituationCard?.attributes.title} description={drawnSituationCard?.attributes.description} />
+    <section class="flex flex-col md:w-[60%]">
+        <div class="flex flex-col gap-x-4 md:w-full">
+            <div class={currentRound === "devil" && drawnPlayerCards ? 'bg-primary-500  self-justify-center w-full text-center p-2 rounded-md' : "hidden"}>
+                <span class="font-bold">Be the Devil's Advocate</span><br/>
+                <span>Convince the judge to follow Satan</span>
+            </div>
+            <div class={currentRound === "angel" && drawnPlayerCards ? 'bg-secondary-500 self-justify-center w-full text-center p-2 rounded-md' : "hidden"}>
+                <span class="font-bold">Be the Shoulder Angel</span><br/>
+                <span>Convince the judge to follow God by countering the card below</span>
+            </div>
+            <div class={`${role === "player" || drawnSituationCard === null ? 'hidden' : ''} px-4 py-10`}>
+                <SituationCard title={drawnSituationCard?.attributes.title} description={drawnSituationCard?.attributes.description} />
+            </div>
+            <div class={`${role === "judge" ? 'hidden' : ''} snap-x scroll-px-4 snap-mandatory scroll-smooth flex gap-4 w-full overflow-x-auto px-4 py-2 rounded-md md:snap-none md:overflow-auto`}>
+                {#if displayCards !== null}
+                    {#each displayCards as card}
+                        <div class="snap-center flex flex-none flex-col align-center">
+                            <Card
+                              id={card.id}
+                              title={card.attributes.title}
+                              idea={card.attributes.idea_short}
+                              example={card.attributes.example_short}
+                              solution={card.attributes.solution_short}
+                              clickable={false}
+                              hoverScale={false}
+                              hideOnMobile={false}
+                              itemsToHide={hideOnCard}
+                              singleCardResponsive={true}
+                              strictHeight={true}
+                            />
+                            <button type="button" disabled={false} on:click={() => playDevilCard(card)} class={playerWonRound ? "hidden" : "btn w-full variant-filled my-2"}>Play Card</button>
+                            <div class={!cardPlayed ? "hidden" : "p-4 bg-surface-700 rounded-sm"}>
+                                <span class="font-bold">Did you win this round?</span>
+                                <div class="flex gap-x-2 mb-2">
+                                    <button type="button" disabled={false} on:click={() => {cardPlayed = false; playerWonRound = true; currentRound = "angel"}} class="btn w-full variant-filled-success">Yes</button>
+                                    <button type="button" disabled={false} on:click={() => {displayInput = true;}} class="btn w-full variant-filled-primary">No</button>
+                                </div>
+                                <div class={!displayInput ? "hidden" : ""}>
+                                    <label class="label">
+                                        <span>Winning Card #</span>
+                                        <input bind:value={cardId} class="input variant-form-material" type="number" />
+                                    </label>
+                                </div>
+                                <button type="button" disabled={!Number.isInteger(cardId)} class={!displayInput ? "hidden" : "btn w-full variant-filled my-2"} on:click={() => {
+                                    currentRound = "angel";
+                                    let winningCard = cards.find(o => o.id === cardId);
+                                    displayCards = [winningCard];
+                                    playerWonRound = true;
+                                    cardPlayed=false;     
+                                }}>Next Round</button>
+                            </div>
+                            <button type="button" disabled={false} on:click={() => {currentRound = "devil"; displayCards = drawnPlayerCards; playerWonRound = false;}} class={currentRound === "angel" && !cardPlayed ? "btn w-full variant-filled mt-2" : "hidden"} >Finish Angel Round</button>
+                        </div>
+                    {/each}
+                {/if}
+            </div>
         </div>
-        <div class="{role === "judge" ? 'hidden' : ''} snap-x scroll-px-4 snap-mandatory scroll-smooth flex gap-4 overflow-x-auto px-4 py-10">
-            {#if drawnPlayerCards !== null}
-                {#each drawnPlayerCards as card}
-                    <div class="snap-center flex flex-none flex-col align-center">
-                        <AngelCard devilTitle={card.attributes.title} devilDescription={card.attributes.idea_short} angelTitle={card.attributes.angel_title} angelDescription={card.attributes.solution_short} />
-                        <button type="button" class="mt-3 btn variant-filled"
-                        on:click={() => {
-                            function filterCard(item) {
-                                return item !== card;
-                            }
-
-                            drawnPlayerCards = drawnPlayerCards.filter(filterCard);
-                        }}>
-                        Play this card</button>
-                    </div>
-                {/each}
-            {/if}
-        </div>
-    </div>
+    </section>
 </main>
