@@ -1,8 +1,8 @@
 <script>
   // Import components
   import Card from '$lib/components/Card.svelte';
-  import { timer, time, isRunning, isComplete } from "../../stores/countdown-timer";
-  import { Accordion, AccordionItem, RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
+  import { timer, time, isRunning, isComplete } from "$lib/stores/countdown-timer";
+  import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 
   // Get Cards data
   export let cards;

@@ -6,6 +6,7 @@ export const load = async ({ fetch, params }) => {
   const result = await fetch(`https://satansplaybook.byu.edu/cms/api/cards/${params.id}?populate=*`);
     const data = await result.json();
     return {
-        card: data.data
+        cardid: data.data?.id,
+        card: data.data?.attributes
     }
 }

@@ -6,6 +6,8 @@
 <script lang="ts">
   // Import functions
   import { goto } from '$app/navigation';
+  import { createSearchStore, searchHandler } from '$lib/stores/search';
+  import { onDestroy } from 'svelte';
 
   // Import components
   import Header from '$lib/components/Header.svelte';
@@ -18,6 +20,20 @@
   const {homepage} = data;
 
   let heroImg: string = "https://satansplaybook.byu.edu/cms/" + homepage.hero_image.data.attributes.formats.medium.url;
+  
+  const searchItems: any[] = cards.map((card: any) => ({
+    ...card,
+    searchTerms: `${card.id} ${card.attributes.title} ${card.attributes.idea_short} ${card.attributes.example_short} ${card.attributes.solution_short}`
+  }));
+  
+  const searchStore = createSearchStore(searchItems);
+  const unsubscribe = searchStore.subscribe(
+    (model) => searchHandler(model)
+  );
+  
+  onDestroy(() => {
+    unsubscribe();
+  });
 </script>
 
 <!-- HEADER -->
@@ -40,12 +56,15 @@
   </div>
 
   <!-- Cards Heading -->
-  <h2 class="h2 font-heading uppercase tracking-wider text-3xl mb-2 text-white">{homepage.card_heading}</h2>
+  <div class="flex flex-col mb-4 md:flex-row md:items-center">
+    <h2 class=" self-center h2 font-heading uppercase tracking-wider text-3xl mb-2 md:mb-0 text-white md:w-[30%]">{homepage.card_heading}</h2>
+    <input class="input h-10 p-4 md:w-[70%]" bind:value={$searchStore.search} title="Input (search)" type="search" placeholder="Search cards..." />
+  </div>
   <hr />
 
   <!-- Display Cards in 4x4 Grid -->
   <div class="grid grid-cols-1 gap-x-24 sm:gap-x-16 justify-items-center sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 grid-flow-row gap-y-4 lg:gap-y-8 py-4">
-    {#each cards as card}
+    {#each $searchStore.filtered as card}
         <Card
           id={card.id}
           title={card.attributes.title}

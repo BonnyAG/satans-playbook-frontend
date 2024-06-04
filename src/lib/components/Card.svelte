@@ -10,8 +10,11 @@
   export let idea: string;
   export let example: string;
   export let solution: string;
+  
   // Utilities
-  export let itemsToHide = [];
+  export let itemsToHide: string[] = [];
+  
+  // Toggle Switches
   export let hoverScale = false;
   export let hideOnMobile = false;
   export let singleCardResponsive = false;
