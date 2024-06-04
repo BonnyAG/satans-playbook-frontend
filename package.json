@@ -38,6 +38,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"caniuse-lite": "^1.0.30001627",
 		"date-fns": "^3.6.0",
 		"svelte-countdown": "^1.1.2",
 		"svelte-markdown": "^0.3.0"

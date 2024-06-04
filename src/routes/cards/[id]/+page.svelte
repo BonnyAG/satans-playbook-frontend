@@ -1,7 +1,7 @@
 <svelte:head>
   <!-- Add Dynamic title to the url -->
-  <title>Satan's Playbook - {card.title}</title>
-  <meta name="description" content={card.idea_short} />
+  <title>Satan's Playbook - {card.attributes.title}</title>
+  <meta name="description" content={card.attributes.idea_short} />
 </svelte:head>
 
 <script>
@@ -31,13 +31,12 @@
   <div class="flex flex-col-reverse md:flex-row gap-4 content-end my-12">
     <!-- Card -->
     <Card
-      class="self-center md:self-start"
       id={card.id}
+      title={card.attributes.title}
+      idea={card.attributes.idea_short}
+      example={card.attributes.example_short}
+      solution={card.attributes.solution_short}
       singleCardResponsive={true}
-      title={card.title}
-      idea={card.idea_short}
-      example={card.example_short}
-      solution={card.solution_short}
       hideOnMobile={true}
     />
 
@@ -45,7 +44,7 @@
     <div class="font-body tracking-wider text-lg flex content-end flex-col lg:w-[80%] px-6">
       <!-- Card Title -->
       <div class="flex flex-wrap gap-y-3 justify-between content-end mt-[-1rem]">
-        <h1 class="text-4xl font-heading uppercase tracking-wider self-end">{card.title}</h1>
+        <h1 class="text-4xl font-heading uppercase tracking-wider self-end">{card.attributes.title}</h1>
         <a href="/" type="button" class="btn variant-filled w-36 md:w-48 self-center mb-1">
           <span>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -58,28 +57,28 @@
       <hr class="mt-2 mb-5"/>
 
       <!-- Definition of the Spiritual Fallacy -->
-      <Markdown class="whitespace-pre-line" source={card.idea_full == null ? card.idea_short : card.idea_full} />
+      <Markdown class="whitespace-pre-line" source={card.attributes.idea_full == null ? card.attributes.idea_short : card.attributes.idea_full} />
 
       <!-- Example -->
       <div class="text-white bg-maroon rounded-xl p-3 mt-8 ">
         <h2 class="text-2xl mb-2 font-heading tracking-wider uppercase">What does this look like?</h2>
-        <Markdown class="whitespace-pre-line" source={card.example_long == null ? card.example_short : card.example_long} />
+        <Markdown class="whitespace-pre-line" source={card.attributes.example_long == null ? card.attributes.example_short : card.attributes.example_long} />
       </div>
 
       <!-- Solution -->
       <h2 class="text-2xl mt-8 mb-2 font-heading tracking-wider uppercase">What do I do about it?</h2>
-      <Markdown class="whitespace-pre-line" source={card.solution_long == null ? card.solution_short : card.solution_long} />
+      <Markdown class="whitespace-pre-line" source={card.attributes.solution_long == null ? card.attributes.solution_short : card.attributes.solution_long} />
 
       <!-- Resources -->
       <h2 class="text-2xl mt-8 mb-2 font-heading tracking-wider uppercase">More Resources</h2>
       <nav class="lg:list-nav">
         <ul>
-          {#if card.scripture_references.length > 0}
+          {#if card.attributes.scripture_references.length > 0}
             {#each card.scripture_references as reference}
               <Reference linkType="scripture" link={reference} />
             {/each}
           {/if}
-          {#if card.link_reference.length > 0}
+          {#if card.attributes.link_reference.length > 0}
             {#each card.link_reference as reference}
               <Reference linkType="externalLink" link={reference} />
             {/each}
