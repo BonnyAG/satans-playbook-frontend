@@ -180,7 +180,7 @@
                 <span>Convince the judge to follow God by countering the card below</span>
             </div>
             <div class={`${role === "player" || drawnSituationCard === null ? 'hidden' : ''} px-4 py-10`}>
-                <SituationCard title={drawnSituationCard?.attributes.title} description={drawnSituationCard?.attributes.description} />
+                <SituationCard title={drawnSituationCard?.attributes.title} description={drawnSituationCard?.attributes.description_long} />
             </div>
             <div class={`${role === "judge" ? 'hidden' : ''} snap-x scroll-px-4 snap-mandatory scroll-smooth flex gap-4 w-full overflow-x-auto px-4 py-2 rounded-md md:snap-none md:overflow-auto`}>
                 {#if displayCards !== null}
