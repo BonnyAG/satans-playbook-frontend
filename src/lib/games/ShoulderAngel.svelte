@@ -61,6 +61,7 @@
     let playerWonRound: boolean = false;
     let displayInput: boolean = false;
     let cardId: number|null = null; 
+    let initialized: boolean = true;
 
     // JUDGING
     const pickSituationCard = () => {
@@ -68,6 +69,15 @@
         let index = getRandomInt(temp.length-1);
 
         drawnSituationCard = temp[index];
+        
+        if(initialized) {
+            if([24, 25, 26, 27, 28, 29, 30].includes(drawnSituationCard?.id)) {
+                pickSituationCard();
+                initialized = false;
+            } else {
+                initialized = false;
+            }
+        }
 
         if(availableSituationCards.length === 1) {
             availableSituationCards = situationCards;
