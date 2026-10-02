@@ -1,13 +1,15 @@
 //routes/games/+page.js
 export const load = async ({ fetch }) => {
-  const gamesResult = await fetch('https://satansplaybook.byu.edu/cms/api/games');
-  const gamesData = await gamesResult.json();
+  const api_games = await fetch("https://satansplaybook.byu.edu/cms/api/games");
+  const cms_collection_games = await api_games.json();
 
-  const gamesPageResult = await fetch('https://satansplaybook.byu.edu/cms/api/games-page');
-  const pageData = await gamesPageResult.json();
+  const api_gamepage = await fetch(
+    "https://satansplaybook.byu.edu/cms/api/games-page"
+  );
+  const cms_page_game = await api_gamepage.json();
 
   return {
-    games: gamesData.data,
-    page: pageData.data,
-  }
-}
+    games: cms_collection_games.data,
+    page: cms_page_game.data,
+  };
+};

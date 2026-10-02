@@ -1,19 +1,20 @@
 <script lang="ts">
   // IMPORTS
   // EXTERNAL FUNCTIONS
-  import { goto } from '$app/navigation';
+  import { goto } from "$app/navigation";
 
   // PROPS
   // Card Content
   export let id: number;
+  export let documentId: string;
   export let title: string;
   export let idea: string;
   export let example: string;
   export let solution: string;
-  
+
   // Utilities
   export let itemsToHide: string[] = [];
-  
+
   // Toggle Switches
   export let hoverScale = false;
   export let hideOnMobile = false;
@@ -23,10 +24,22 @@
 </script>
 
 <!-- CARD START -->
-<div class={`${hoverScale ? 'hover:scale-110' : ''} ${hideOnMobile ? 'hidden lg:block' : ''} ${singleCardResponsive ? 'mt-4 self-center md:mt-0 md:self-start' : ''} bg-white border-4 border-surface-500 shadow-md shadow-surface-500 text-slate-900 p-4 w-80 rounded-lg col-auto hover:shadow-maroon hover:shadow-2xl transition flex flex-col justify-between ${strictHeight ? 'h-[29rem]' : ''} hover:cursor-pointer`} on:click={clickable ? () => goto('/cards/' + id) : null} on:keypress={clickable ? () => goto('/cards/' + id) : null}>
+<div
+  class={`${hoverScale ? "hover:scale-110" : ""} ${
+    hideOnMobile ? "hidden lg:block" : ""
+  } ${
+    singleCardResponsive ? "mt-4 self-center md:mt-0 md:self-start" : ""
+  } bg-white border-4 border-surface-500 shadow-md shadow-surface-500 text-slate-900 p-4 w-80 rounded-lg col-auto hover:shadow-maroon hover:shadow-2xl transition flex flex-col justify-between ${
+    strictHeight ? "h-[29rem]" : ""
+  } hover:cursor-pointer`}
+  on:click={clickable ? () => goto("/cards/" + documentId) : null}
+  on:keypress={clickable ? () => goto("/cards/" + documentId) : null}
+>
   <!-- Card Title -->
   {#if !itemsToHide.includes("title")}
-    <h2 class="text-center font-heading text-3xl self-center uppercase">{title}</h2>
+    <h2 class="text-center font-heading text-3xl self-center uppercase">
+      {title}
+    </h2>
   {/if}
 
   <!-- CONTENT START -->
@@ -36,16 +49,22 @@
   {/if}
 
   <!-- Example-->
-  <p class="font-mono text-sm p-3 bg-maroon text-center text-white rounded-2xl my-2">{example}</p>
+  <p
+    class="font-mono text-sm p-3 bg-maroon text-center text-white rounded-2xl my-2"
+  >
+    {example}
+  </p>
 
   <!-- Hide solution if empty -->
   {#if solution !== null && !itemsToHide.includes("solution")}
     <!-- Solution -->
-    <span class="text-center font-heading text-lg uppercase mt-1 mb-0.5">Antidote</span>
+    <span class="text-center font-heading text-lg uppercase mt-1 mb-0.5"
+      >Antidote</span
+    >
     <p class="font-body text-md">{solution}</p>
   {/if}
   <!-- CONTENT END -->
-  
+
   <h2 class="font-heading text-xl uppercase text-right">#{id}</h2>
 </div>
 <!-- CARD END -->

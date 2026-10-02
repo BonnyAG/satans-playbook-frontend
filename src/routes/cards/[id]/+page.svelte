@@ -1,34 +1,55 @@
-<svelte:head>
-  <!-- Add Dynamic title to the url -->
-  <title>Satan's Playbook - {card.title} </title>
-  <meta name="description" content={card.idea_short}/>
-</svelte:head>
-
 <script>
   // Svelte Imports
-  import { onMount } from 'svelte';
-  import { page } from '$app/stores'
-  
+  import { onMount } from "svelte";
+  import { page } from "$app/stores";
+
   // Import Components
-  import Header from '$lib/components/Header.svelte';
-  import Footer from '$lib/components/Footer.svelte';
-  import Card from '$lib/components/Card.svelte';
-  import Reference from '$lib/components/Reference.svelte';
-  import Markdown from 'svelte-markdown';
+  import Header from "$lib/components/Header.svelte";
+  import Footer from "$lib/components/Footer.svelte";
+  import Card from "$lib/components/Card.svelte";
+  import Reference from "$lib/components/Reference.svelte";
+  import Markdown from "svelte-markdown";
 
   let badgeColors = [
-    {type: "scriptures", name:"Scriptures", style: "bg-primary-300 text-primary-900"},
-    {type: "prophets_and_apostles", name:"Prophets & Apostles", style: "bg-secondary-300 text-secondary-900"},
-    {type: "social_science", name:"Social Science", style: "bg-tertiary-300 text-tertiary-900"},
-    {type: "article", name:"Article", style: "bg-success-300 text-success-900"},
-    {type: "research_paper", name:"Research Paper", style: "bg-surface-300 text-surface-900"}
-  ]
+    {
+      type: "scriptures",
+      name: "Scriptures",
+      style: "bg-primary-300 text-primary-900",
+    },
+    {
+      type: "prophets_and_apostles",
+      name: "Prophets & Apostles",
+      style: "bg-secondary-300 text-secondary-900",
+    },
+    {
+      type: "social_science",
+      name: "Social Science",
+      style: "bg-tertiary-300 text-tertiary-900",
+    },
+    {
+      type: "article",
+      name: "Article",
+      style: "bg-success-300 text-success-900",
+    },
+    {
+      type: "research_paper",
+      name: "Research Paper",
+      style: "bg-surface-300 text-surface-900",
+    },
+  ];
 
   // Get Cards data
   export let data;
-  const {cardid} = data;
-  const {card} = data;
+  const { card } = data;
+
+  console.log(card);
 </script>
+
+<svelte:head>
+  <!-- Dynamic title to the url -->
+  <title>Satan's Playbook - {card.title}</title>
+  <meta name="description" content={card.idea_short} />
+</svelte:head>
 
 <Header selectedPage="" />
 <main class="container mx-auto mt-4">
@@ -36,7 +57,7 @@
   <div class="flex flex-col-reverse md:flex-row gap-4 content-end my-12">
     <!-- Card -->
     <Card
-      id={cardid}
+      id={card.id}
       title={card.title}
       idea={card.idea_short}
       example={card.example_short}
@@ -44,44 +65,81 @@
       singleCardResponsive={true}
       hideOnMobile={true}
     />
-  
+
     <!-- Hero Content -->
-    <div class="font-body tracking-wider text-lg flex content-end flex-col lg:w-[80%] px-6">
+    <div
+      class="font-body tracking-wider text-lg flex content-end flex-col lg:w-[80%] px-6"
+    >
       <!-- Card Title -->
-      <div class="flex flex-wrap gap-y-3 justify-between content-end mt-[-1rem]">
-        <h1 class="text-4xl font-heading uppercase tracking-wider self-end">{card.title}</h1>
-        <a href="/" type="button" class="btn variant-filled w-36 md:w-48 self-center mb-1">
+      <div
+        class="flex flex-wrap gap-y-3 justify-between content-end mt-[-1rem]"
+      >
+        <h1 class="text-4xl font-heading uppercase tracking-wider self-end">
+          {card.title}
+        </h1>
+        <a
+          href="/"
+          type="button"
+          class="btn variant-filled w-36 md:w-48 self-center mb-1"
+        >
           <span>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+              />
             </svg>
           </span>
           <span class="font-body tracking-wider text-md">Back to Cards</span>
         </a>
       </div>
-      <hr class="mt-2 mb-5"/>
-  
+      <hr class="mt-2 mb-5" />
+
       <!-- Definition of the Spiritual Fallacy -->
       <div class="whitespace-pre-line">
-        <Markdown source={card.idea_full == null ? card.idea_short : card.idea_full} />
+        <Markdown
+          source={card.idea_full == null ? card.idea_short : card.idea_full}
+        />
       </div>
-  
+
       <!-- Example -->
-      <div class="text-white bg-maroon rounded-xl p-3 mt-8 ">
-        <h2 class="text-2xl mb-2 font-heading tracking-wider uppercase">What does this look like?</h2>
+      <div class="text-white bg-maroon rounded-xl p-3 mt-8">
+        <h2 class="text-2xl mb-2 font-heading tracking-wider uppercase">
+          What does this look like?
+        </h2>
         <div class="whitespace-pre-line">
-          <Markdown source={card.example_long == null ? card.example_short : card.example_long} />
+          <Markdown
+            source={card.example_long == null
+              ? card.example_short
+              : card.example_long}
+          />
         </div>
       </div>
-  
+
       <!-- Solution -->
-      <h2 class="text-2xl mt-8 mb-2 font-heading tracking-wider uppercase">What do I do about it?</h2>
+      <h2 class="text-2xl mt-8 mb-2 font-heading tracking-wider uppercase">
+        What do I do about it?
+      </h2>
       <div class="whitespace-pre-line">
-        <Markdown source={card.solution_long == null ? card.solution_short : card.solution_long} />
+        <Markdown
+          source={card.solution_long == null
+            ? card.solution_short
+            : card.solution_long}
+        />
       </div>
-  
+
       <!-- Resources -->
-      <h2 class="text-2xl mt-8 mb-2 font-heading tracking-wider uppercase">More Resources</h2>
+      <h2 class="text-2xl mt-8 mb-2 font-heading tracking-wider uppercase">
+        More Resources
+      </h2>
       <nav class="lg:list-nav">
         <ul>
           {#if card.scripture_references.length > 0}
